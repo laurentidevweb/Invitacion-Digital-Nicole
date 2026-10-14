@@ -1528,3 +1528,37 @@ main.etapa-invitacion {
   position: relative;
   text-shadow: 0 1px 10px rgba(45, 0, 35, 0.2);
 }
+
+/* CORRECCIÓN DEL MONOGRAMA EN MÓVILES */
+.etapa-invitacion .nav-fiesta > .monograma {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  flex-shrink: 0;
+  white-space: nowrap;
+  text-decoration: none;
+  text-transform: none;
+  font-family: Georgia, serif;
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.etapa-invitacion .nav-fiesta > .monograma::before,
+.etapa-invitacion .nav-fiesta > .monograma::after {
+  content: none !important;
+}
+
+.etapa-invitacion .nav-fiesta > .monograma > span {
+  display: inline-block;
+  color: #ff75d8;
+  font-family: Georgia, serif;
+  font-size: 0.85rem;
+  line-height: 1;
+}
+
+@media (max-width: 380px) {
+  .etapa-invitacion .nav-fiesta > .monograma {
+    font-size: 1.65rem;
+  }
+}
