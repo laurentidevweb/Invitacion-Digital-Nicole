@@ -150,7 +150,7 @@ function App() {
         <div className="invitacion">
           <header className="nav-fiesta">
             <a className="monograma" href="#inicio">
-              N<span>✦</span>
+              <span>✦</span>
             </a>
 
             <nav>
