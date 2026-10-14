@@ -1,0 +1,1530 @@
+/* ==============================
+   BASE GENERAL
+================================ */
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+}
+
+main {
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1.25rem;
+  text-align: center;
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      ellipse at 50% 40%,
+      rgba(255, 45, 170, 0.24) 0%,
+      transparent 45%
+    ),
+    radial-gradient(
+      ellipse at 0% 100%,
+      rgba(168, 85, 247, 0.24) 0%,
+      transparent 42%
+    ),
+    radial-gradient(
+      ellipse at 100% 0%,
+      rgba(255, 45, 170, 0.16) 0%,
+      transparent 40%
+    ),
+    #080612;
+}
+
+section {
+  width: 100%;
+  max-width: 30rem;
+}
+
+h1 {
+  font-size: 3rem;
+  margin-bottom: 0.75rem;
+}
+
+p {
+  font-size: 1.125rem;
+  line-height: 1.5;
+}
+
+button {
+  margin-top: 1.5rem;
+  padding: 0.875rem 1.5rem;
+  border: 1px solid #a78bfa;
+  border-radius: 999px;
+  color: #ffffff;
+  background: #21143d;
+  font: inherit;
+  cursor: pointer;
+}
+
+/* ==============================
+   BOLA DISCO
+   No modifica su animación 3D
+================================ */
+
+.disco-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 12rem;
+  height: 12rem;
+  margin: 2rem auto 0;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  perspective: 40rem;
+  transition: transform 0.3s ease;
+}
+
+.disco-button:hover:not(:disabled) {
+  transform: scale(1.06);
+}
+
+.disco-button:active:not(:disabled) {
+  transform: scale(0.96);
+}
+
+.disco-button:disabled {
+  cursor: default;
+}
+
+.disco-canvas {
+  width: 10rem;
+  height: 10rem;
+  flex-shrink: 0;
+  pointer-events: none;
+}
+
+.disco-canvas canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* ==============================
+   TEXTO PARA COMENZAR
+================================ */
+
+.disco-button + p {
+  margin-top: 1rem;
+  color: #ff75d8;
+  font-size: 0.85rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  animation: texto-neon 2s ease-in-out infinite;
+}
+
+@keyframes texto-neon {
+  0%,
+  100% {
+    opacity: 0.55;
+    text-shadow: 0 0 6px rgba(255, 45, 170, 0.35);
+  }
+
+  50% {
+    opacity: 1;
+    text-shadow:
+      0 0 8px rgba(255, 45, 170, 0.8),
+      0 0 18px rgba(168, 85, 247, 0.5);
+  }
+}
+
+/* ==============================
+   TRANSICIÓN CINEMATOGRÁFICA
+================================ */
+
+.etapa-animacion {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #080612;
+}
+
+.pantalla-animacion {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: none;
+  min-height: 100vh;
+  min-height: 100svh;
+}
+
+.pantalla-animacion .disco-button {
+  position: relative;
+  z-index: 1;
+  animation: acercamiento-bola 4.2s cubic-bezier(0.65, 0, 0.85, 0.35) forwards;
+}
+
+@keyframes acercamiento-bola {
+  0% {
+    transform: scale(1);
+    filter: brightness(1);
+    opacity: 1;
+  }
+
+  35% {
+    transform: scale(1.35);
+    filter: brightness(1.2);
+  }
+
+  65% {
+    transform: scale(2.5);
+    filter: brightness(1.5);
+  }
+
+  85% {
+    transform: scale(5);
+    filter: brightness(2);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(8);
+    filter: brightness(3);
+    opacity: 0;
+  }
+}
+
+/* Destello rosa y violeta */
+
+.destello {
+  position: fixed;
+  inset: -30%;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0;
+
+  background: radial-gradient(
+    circle at center,
+    rgba(255, 255, 255, 0.98) 0%,
+    rgba(255, 117, 216, 0.85) 12%,
+    rgba(255, 45, 170, 0.55) 28%,
+    rgba(168, 85, 247, 0.3) 45%,
+    transparent 62%
+  );
+
+  animation: destello-cinematico 4.2s ease-in-out both;
+}
+
+@keyframes destello-cinematico {
+  0%,
+  45% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+
+  65% {
+    opacity: 0.25;
+    transform: scale(0.8);
+  }
+
+  78% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.8);
+  }
+}
+
+/* ==============================
+   PANTALLA DEL TÍTULO
+================================ */
+
+.etapa-titulo {
+  position: relative;
+  overflow: hidden;
+  padding: 0;
+}
+
+/* Imagen oscura de fondo */
+
+.pantalla-titulo {
+  position: relative;
+  isolation: isolate;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  max-width: none;
+  min-height: 100vh;
+  min-height: 100svh;
+
+  padding: 3rem 1rem;
+  overflow: hidden;
+  text-align: center;
+
+  background:
+    linear-gradient(to bottom, rgba(10, 3, 14, 0.76), rgba(10, 3, 14, 0.86)),
+    url("/disco-party.jpg") center center / cover no-repeat;
+
+  animation: revelar-titulo 2.8s ease-out both;
+}
+
+/* Luz ambiental rosa y violeta */
+
+.pantalla-titulo::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  width: 125%;
+  aspect-ratio: 1;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+  background: radial-gradient(
+    circle,
+    rgba(255, 35, 170, 0.12) 0%,
+    rgba(142, 45, 255, 0.08) 35%,
+    transparent 68%
+  );
+
+  filter: blur(18px);
+  animation: respirar-luz 4s ease-in-out infinite;
+}
+
+/* MIS XV AÑOS */
+
+.subtitulo-intro {
+  position: relative;
+  z-index: 1;
+
+  color: #ffffff;
+  font-family: var(--font-display, "Bodoni Moda", serif);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+  font-size: 1.4rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+
+  margin: 0 0 0.5rem;
+  opacity: 0;
+
+  text-shadow: 0 0 14px rgba(255, 45, 170, 0.4);
+
+  animation: aparecer-texto 1.5s ease-out 0.8s both;
+}
+
+/* NICOLE: tipografía original de Lovable */
+
+.pantalla-titulo .nicole-name {
+  position: relative;
+  z-index: 1;
+  top: 20px;
+  font-family: var(--font-script, "Ballet", cursive);
+  font-weight: 400;
+  font-size: clamp(6rem, 18vw, 9rem);
+  line-height: 1.25;
+
+  color: #ff75d8;
+  margin: 0;
+
+  opacity: 0;
+
+  text-shadow:
+    0 0 8px rgba(255, 117, 216, 0.45),
+    0 0 24px rgba(255, 45, 170, 0.35);
+
+  animation: aparecer-nombre 2s ease-out 1s both;
+}
+
+/* Frase debajo del nombre */
+
+.frase-intro {
+  position: relative;
+  z-index: 1;
+
+  color: #ffffff;
+  font-family: var(--font-display, "Bodoni Moda", serif);
+  font-style: italic;
+  font-size: 1.4rem;
+  letter-spacing: 0.02em;
+
+  margin: 0.75rem 0 0;
+  opacity: 0;
+
+  animation: aparecer-texto 1.6s ease-out 2.2s both;
+}
+
+/* ==============================
+   ANIMACIONES DEL TÍTULO
+================================ */
+
+@keyframes revelar-titulo {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes aparecer-nombre {
+  0% {
+    opacity: 0;
+    transform: translateY(12px) scale(0.9);
+    filter: blur(10px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes respirar-luz {
+  0%,
+  100% {
+    opacity: 0.65;
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.15);
+  }
+}
+
+@keyframes aparecer-texto {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ==============================
+   RESPONSIVE: TABLETS Y CELULARES
+================================ */
+
+@media (max-width: 700px) {
+  .disco-button {
+    width: 12rem;
+    height: 12rem;
+  }
+
+  .disco-canvas {
+    width: 10rem;
+    height: 10rem;
+  }
+
+  .pantalla-titulo {
+    padding: 2rem 0.75rem;
+
+    background-position: center center;
+  }
+
+  .pantalla-titulo .nicole-name {
+    font-size: 116px;
+  }
+
+  .subtitulo-intro {
+    font-size: 0.75rem;
+    letter-spacing: 0.3em;
+  }
+
+  .frase-intro {
+    font-size: 1.05rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .pantalla-titulo .nicole-name {
+    font-size: 100px;
+  }
+
+  .subtitulo-intro {
+    font-size: 0.68rem;
+    letter-spacing: 0.22em;
+  }
+
+  .frase-intro {
+    font-size: 0.95rem;
+  }
+}
+
+/* Respeta la preferencia de reducir movimiento */
+
+@media (prefers-reduced-motion: reduce) {
+  .disco-button + p,
+  .pantalla-titulo,
+  .pantalla-titulo::before,
+  .pantalla-titulo .nicole-name,
+  .subtitulo-intro,
+  .frase-intro {
+    animation: none;
+  }
+
+  .pantalla-titulo .nicole-name,
+  .subtitulo-intro,
+  .frase-intro {
+    opacity: 1;
+    filter: none;
+    transform: none;
+  }
+}
+/* PRUEBA: entrada animada de los textos */
+.pantalla-titulo .subtitulo-intro {
+  opacity: 0;
+  animation: aparecer-texto 1.5s ease-out 0.3s both !important;
+}
+
+.pantalla-titulo .nicole-name {
+  opacity: 0;
+  animation: aparecer-nombre 2s ease-out 0.7s both !important;
+}
+
+.pantalla-titulo .frase-intro {
+  opacity: 0;
+  animation: aparecer-texto 1.5s ease-out 1.9s both !important;
+}
+
+
+/* ESTRELLAS DECORATIVAS */
+.estrellas {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.estrella {
+  position: absolute;
+  color: #ffd5f3;
+  text-shadow:
+    0 0 8px #ff75d8,
+    0 0 18px #d84bff;
+  animation: brillar 2.5s ease-in-out infinite alternate;
+}
+
+.estrella-1 {
+  top: 22%;
+  left: 18%;
+  font-size: 22px;
+}
+
+.estrella-2 {
+  top: 30%;
+  right: 19%;
+  font-size: 30px;
+  animation-delay: 0.7s;
+}
+
+.estrella-3 {
+  top: 48%;
+  left: 12%;
+  font-size: 16px;
+  animation-delay: 1.1s;
+}
+
+.estrella-4 {
+  top: 57%;
+  right: 13%;
+  font-size: 24px;
+  animation-delay: 0.4s;
+}
+
+.estrella-5 {
+  top: 70%;
+  left: 25%;
+  font-size: 13px;
+  animation-delay: 1.5s;
+}
+
+.estrella-6 {
+  top: 18%;
+  right: 32%;
+  font-size: 14px;
+  animation-delay: 0.9s;
+}
+
+.estrella-7 {
+  top: 75%;
+  left: 72%;
+  font-size: 20px;
+  animation-delay: 0.6s;
+}
+
+
+/* ANIMACIÓN DEL BRILLO */
+@keyframes brillar {
+  from {
+    opacity: 0.3;
+    transform: scale(0.7) rotate(0deg);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1.2) rotate(20deg);
+  }
+}
+
+/* FECHA DEL EVENTO */
+.fecha-intro {
+  position: relative;
+  margin: 28px 0 0;
+  color: #f5d8ed;
+  font-family: var(--font-sans);
+  font-size: 1.3rem;
+  font-weight: 500;
+  letter-spacing: 0.35em;
+  text-align: center;
+  opacity: 0;
+  animation: aparecer-texto 1.5s ease-out 2.4s both;
+}
+
+
+
+/* ==============================
+   INVITACIÓN DE NICOLE
+   Noche disco: negro, rosa y plata
+================================ */
+
+main.etapa-invitacion {
+  display: block;
+  min-height: 100vh;
+  min-height: 100svh;
+  padding: 0;
+  overflow: visible;
+  text-align: center;
+  color: #f8edf6;
+  background: #0a0710;
+  font-family: var(--font-sans, "Montserrat", Arial, sans-serif);
+}
+
+.etapa-invitacion .invitacion {
+  --rosa: #ff75d8;
+  --rosa-intenso: #f52ca9;
+  --plata: #d8d5e0;
+  --fondo: #0a0710;
+  --fondo-tarjeta: #15101c;
+
+  width: 100%;
+  overflow: hidden;
+  color: #f8edf6;
+  background:
+    radial-gradient(ellipse at 50% 10%, #30112b 0%, transparent 45%),
+    var(--fondo);
+  text-align: center;
+}
+
+.etapa-invitacion .invitacion * {
+  box-sizing: border-box;
+}
+
+.etapa-invitacion .invitacion section {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+}
+
+.etapa-invitacion .invitacion p {
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+.etapa-invitacion .invitacion h1,
+.etapa-invitacion .invitacion h2,
+.etapa-invitacion .invitacion h3 {
+  font-family: var(--font-display, "Bodoni Moda", Georgia, serif);
+  font-weight: 400;
+}
+
+.etapa-invitacion .invitacion a {
+  color: inherit;
+}
+
+.etapa-invitacion .invitacion a:focus-visible,
+.etapa-invitacion .invitacion button:focus-visible {
+  outline: 2px solid var(--rosa);
+  outline-offset: 5px;
+}
+
+/* NAVEGACIÓN */
+
+.nav-fiesta {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  width: min(1120px, calc(100% - 64px));
+  min-height: 84px;
+  margin: 0 auto;
+  border-bottom: 1px solid rgba(216, 213, 224, 0.15);
+}
+
+.monograma {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: #fff !important;
+  font-family: var(--font-display, Georgia, serif);
+  font-size: 2rem;
+  text-decoration: none;
+}
+
+.monograma span {
+  color: var(--rosa);
+  font-size: 0.85rem;
+}
+
+.nav-fiesta nav {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.nav-fiesta nav a {
+  color: #d8d0df !important;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.nav-fiesta nav a:hover {
+  color: var(--rosa) !important;
+}
+
+/* PORTADA PRINCIPAL */
+
+.hero-fiesta {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  min-height: 690px;
+  min-height: min(800px, 90svh);
+  overflow: hidden;
+  text-align: left;
+  background:
+    radial-gradient(ellipse at 75% 40%, #6b1b58 0%, transparent 48%),
+    linear-gradient(120deg, #0a0710 10%, #1d0b20 65%, #09070e);
+}
+
+.hero-imagen {
+  position: absolute;
+  z-index: -2;
+  top: 0;
+  right: 0;
+  width: 68%;
+  height: 100%;
+  background:
+    linear-gradient(90deg, #0a0710 0%, rgba(10, 7, 16, 0.12) 65%),
+    linear-gradient(0deg, rgba(10, 7, 16, 0.8), transparent 48%),
+    url("/disco-party.jpg") center 40% / cover no-repeat;
+  opacity: 0.83;
+}
+
+.hero-fiesta::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 75% 35%, rgba(255, 45, 170, 0.2), transparent 40%),
+    linear-gradient(90deg, #0a0710 0%, rgba(10, 7, 16, 0.78) 37%, transparent 100%);
+}
+
+.hero-contenido {
+  width: min(1120px, calc(100% - 64px));
+  margin: 0 auto;
+  padding: 80px 0;
+}
+
+.etiqueta-seccion {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 0 0 20px;
+  color: var(--rosa);
+  font-size: 0.72rem !important;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  line-height: 1.5 !important;
+  text-transform: uppercase;
+}
+
+.hero-contenido > .etiqueta-seccion {
+  justify-content: flex-start;
+}
+
+.hero-contenido h1 {
+  margin: 0;
+  color: #ff8bdd;
+  font-family: var(--font-script, "Ballet", cursive) !important;
+  font-size: clamp(6rem, 15vw, 10.5rem);
+  font-weight: 400;
+  line-height: 1.15;
+  text-shadow:
+    0 0 12px rgba(255, 117, 216, 0.45),
+    0 0 40px rgba(245, 44, 169, 0.25);
+}
+
+.hero-subtitulo {
+  margin: 5px 0 0;
+  color: #f5eff7;
+  font-size: 0.95rem !important;
+  letter-spacing: 0.38em;
+}
+
+.separador-decorativo {
+  margin: 24px 0;
+  color: var(--plata);
+  font-size: 1.3rem;
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.55);
+}
+
+.hero-frase {
+  margin: 0;
+  color: #e4d9e7;
+  font-family: var(--font-display, Georgia, serif);
+  font-size: 1.55rem !important;
+  font-style: italic;
+}
+
+.hero-fecha {
+  margin: 28px 0;
+  color: var(--plata);
+  font-size: 0.9rem !important;
+  letter-spacing: 0.22em;
+}
+
+.boton-fiesta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  min-height: 50px;
+  margin: 12px 0 0;
+  padding: 15px 24px;
+  border: 1px solid rgba(255, 117, 216, 0.75);
+  border-radius: 3px;
+  color: #fff !important;
+  background: linear-gradient(135deg, #a51c76, #591746);
+  box-shadow: 0 0 28px rgba(245, 44, 169, 0.13);
+  font-family: var(--font-sans, Arial, sans-serif);
+  font-size: 0.72rem !important;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  line-height: 1.4 !important;
+  text-align: center;
+  text-decoration: none;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease;
+}
+
+.boton-fiesta:hover {
+  transform: translateY(-3px);
+  background: linear-gradient(135deg, #ce2d98, #7b1c5e);
+  box-shadow: 0 0 32px rgba(245, 44, 169, 0.3);
+}
+
+.hero-contenido .hero-scroll {
+  display: block;
+  width: fit-content;
+  margin-top: 34px;
+  color: #c9bdcf !important;
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-decoration: none;
+}
+
+/* FRANJA ROSA */
+
+.franja-fiesta {
+  padding: 17px 12px;
+  overflow: hidden;
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+  color: #fff;
+  background: linear-gradient(90deg, #6b174f, #bd2a88, #6b174f);
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  word-spacing: 0.5em;
+}
+
+/* SECCIONES GENERALES */
+
+.seccion-fiesta {
+  padding: 90px 24px;
+}
+
+.seccion-fiesta > h2,
+.regla-fiesta h2 {
+  margin: 0;
+  color: #f8edf6;
+  font-size: clamp(2rem, 5vw, 3.1rem);
+  line-height: 1.25;
+}
+
+.texto-suave {
+  max-width: 560px;
+  margin: 18px auto 0;
+  color: #b9acbf;
+  font-size: 1.1rem !important;
+}
+
+/* CUENTA REGRESIVA */
+
+.countdown-section {
+  background:
+    radial-gradient(ellipse at 50% 100%, rgba(245, 44, 169, 0.12), transparent 60%),
+    #100b17;
+}
+
+.cuenta-regresiva {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 110px));
+  justify-content: center;
+  gap: 16px;
+  margin-top: 42px;
+}
+
+.contador {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 110px;
+  padding: 14px 8px;
+  border: 1px solid rgba(216, 213, 224, 0.23);
+  background: linear-gradient(145deg, #201426, #110c18);
+  box-shadow: inset 0 0 20px rgba(255, 117, 216, 0.025);
+}
+
+.contador-numero {
+  color: #ff8bdd;
+  font-family: var(--font-display, Georgia, serif);
+  font-size: 2.4rem;
+  line-height: 1.2;
+  font-variant-numeric: tabular-nums;
+}
+
+.contador-label {
+  margin-top: 8px;
+  color: #c8bdcf;
+  font-size: 0.66rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* DETALLES DEL EVENTO */
+
+.evento-section {
+  background:
+    radial-gradient(ellipse at 0% 50%, rgba(111, 42, 115, 0.13), transparent 50%),
+    #0b0811;
+}
+
+.tarjetas-detalle {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+  width: min(850px, 100%);
+  margin: 48px auto 0;
+  text-align: center;
+}
+
+.detalle-fiesta {
+  padding: 38px 28px;
+  border: 1px solid rgba(216, 213, 224, 0.17);
+  background:
+    linear-gradient(145deg, rgba(255, 117, 216, 0.055), transparent 60%),
+    #15101c;
+  transition:
+    border-color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.detalle-fiesta:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 117, 216, 0.5);
+}
+
+.detalle-icono {
+  display: block;
+  margin-bottom: 18px;
+  color: var(--rosa);
+  font-size: 1.65rem;
+}
+
+.detalle-titulo {
+  margin: 0 0 14px !important;
+  color: #c6bacd;
+  font-size: 0.7rem !important;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+}
+
+.detalle-fiesta h3,
+.banda-detalles h3 {
+  margin: 0 0 15px;
+  color: #f8edf6;
+  font-size: 1.65rem;
+  line-height: 1.35;
+}
+
+.detalle-fiesta > p:not(.detalle-titulo),
+.banda-detalles article > p:not(.detalle-titulo) {
+  color: #b9acbf;
+  font-size: 0.92rem !important;
+}
+
+.enlace-fiesta {
+  display: inline-block;
+  margin-top: 14px;
+  color: var(--rosa) !important;
+  font-size: 0.82rem;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255, 117, 216, 0.45);
+  padding-bottom: 4px;
+}
+
+/* BANDA DE DRESS CODE Y REGALO */
+
+.banda-detalles {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 55px;
+  padding: 75px max(24px, calc((100% - 900px) / 2));
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+  color: #2c2531;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(221, 217, 229, 0.96)),
+    repeating-linear-gradient(135deg, #e6e3eb 0 2px, #f6f4f8 2px 5px);
+}
+
+.banda-detalles article {
+  min-width: 0;
+  padding: 12px;
+}
+
+.banda-detalles .detalle-icono {
+  color: #9c347d;
+}
+
+.banda-detalles .detalle-titulo {
+  color: #65546a;
+}
+
+.banda-detalles h3 {
+  color: #332438;
+}
+
+.banda-detalles article > p:not(.detalle-titulo) {
+  color: #5c5060;
+}
+
+.alias-caja {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  max-width: 370px;
+  margin: 22px auto 0;
+  padding: 10px 10px 10px 16px;
+  border: 1px solid #c7b9ce;
+  background: rgba(255, 255, 255, 0.65);
+}
+
+.alias-caja > span {
+  overflow-wrap: anywhere;
+  color: #4d3151;
+  font-size: 0.94rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.alias-caja button {
+  flex-shrink: 0;
+  margin: 0;
+  padding: 11px 13px;
+  border: 1px solid #8e397b;
+  border-radius: 2px;
+  color: #fff;
+  background: #79265f;
+  font-size: 0.76rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.alias-caja button:hover {
+  background: #9e347f;
+}
+
+/* PLAYLIST */
+
+.canciones-section {
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(245, 44, 169, 0.13), transparent 65%),
+    #100b17;
+}
+
+.canciones-section .boton-fiesta {
+  margin-top: 32px;
+}
+
+/* REGLA DE LA FIESTA */
+
+.regla-fiesta {
+  padding: 75px 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.22);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.22);
+  background:
+    radial-gradient(ellipse at 50% 50%, rgba(255, 117, 216, 0.2), transparent 65%),
+    linear-gradient(120deg, #51123f, #81245e, #51123f);
+}
+
+.regla-fiesta .etiqueta-seccion {
+  color: #ffe2f6;
+}
+
+.regla-fiesta h2 {
+  color: #fff;
+}
+
+.regla-fiesta > p:not(.etiqueta-seccion) {
+  max-width: 570px;
+  margin: 22px auto;
+  color: #f7e7f2;
+  font-size: 1.02rem !important;
+}
+
+.destello-regla {
+  display: block;
+  margin: 0 0 24px;
+  color: #fff;
+  font-size: 1.3rem;
+  letter-spacing: 0.8em;
+  text-shadow: 0 0 14px #ffb6ec;
+}
+
+.regla-fiesta .destello-regla:last-child {
+  margin: 24px 0 0;
+}
+
+/* CONFIRMACIÓN */
+
+.confirmar-section {
+  background:
+    radial-gradient(ellipse at 50% 100%, rgba(245, 44, 169, 0.15), transparent 60%),
+    #0a0710;
+}
+
+.confirmar-section .boton-fiesta {
+  margin-top: 30px;
+}
+
+/* PIE DE PÁGINA */
+
+.footer-fiesta {
+  padding: 35px 20px 28px;
+  border-top: 1px solid rgba(216, 213, 224, 0.16);
+  background: #07050b;
+}
+
+.footer-nombre {
+  margin: 0;
+  color: var(--rosa);
+  font-family: var(--font-script, "Ballet", cursive);
+  font-size: 3.2rem !important;
+  line-height: 1.3 !important;
+}
+
+.footer-fiesta > p:not(.footer-nombre) {
+  margin: 8px 0;
+  color: #c7bdce;
+  font-size: 0.7rem !important;
+  letter-spacing: 0.17em;
+}
+
+.footer-fiesta > span {
+  color: #82758a;
+  font-size: 0.75rem;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 700px) {
+  .nav-fiesta {
+    width: calc(100% - 36px);
+    min-height: 70px;
+  }
+
+  .nav-fiesta nav {
+    gap: 15px;
+  }
+
+  .nav-fiesta nav a {
+    font-size: 0.68rem;
+    letter-spacing: 0;
+  }
+
+  .hero-fiesta {
+    min-height: 720px;
+    min-height: 82svh;
+    align-items: flex-end;
+  }
+
+  .hero-imagen {
+    width: 100%;
+    opacity: 0.68;
+    background-position: center center;
+  }
+
+  .hero-fiesta::after {
+    background:
+      linear-gradient(0deg, #0a0710 0%, rgba(10, 7, 16, 0.82) 34%, rgba(10, 7, 16, 0.08) 100%),
+      linear-gradient(90deg, rgba(10, 7, 16, 0.4), transparent);
+  }
+
+  .hero-contenido {
+    width: calc(100% - 40px);
+    padding: 75px 0 58px;
+  }
+
+  .hero-contenido h1 {
+    font-size: clamp(5.5rem, 22vw, 8rem);
+  }
+
+  .hero-subtitulo {
+    font-size: 0.8rem !important;
+    letter-spacing: 0.28em;
+  }
+
+  .hero-frase {
+    font-size: 1.08rem !important;
+  }
+
+  .hero-fecha {
+    font-size: 0.75rem !important;
+    letter-spacing: 0.13em;
+  }
+
+  .seccion-fiesta {
+    padding: 68px 20px;
+  }
+
+  .cuenta-regresiva {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+    margin-top: 32px;
+  }
+
+  .contador {
+    min-height: 86px;
+    padding: 10px 3px;
+  }
+
+  .contador-numero {
+    font-size: clamp(1.5rem, 6vw, 2.1rem);
+  }
+
+  .contador-label {
+    font-size: 0.55rem;
+    letter-spacing: 0.02em;
+  }
+
+  .tarjetas-detalle {
+    grid-template-columns: 1fr;
+    max-width: 460px;
+    gap: 16px;
+    margin-top: 32px;
+  }
+
+  .detalle-fiesta {
+    padding: 30px 20px;
+  }
+
+  .banda-detalles {
+    grid-template-columns: 1fr;
+    gap: 36px;
+    padding: 55px 20px;
+  }
+
+  .banda-detalles article {
+    max-width: 500px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .regla-fiesta {
+    padding: 62px 22px;
+  }
+}
+
+@media (max-width: 380px) {
+  .nav-fiesta {
+    width: calc(100% - 24px);
+  }
+
+  .nav-fiesta nav {
+    gap: 10px;
+  }
+
+  .nav-fiesta nav a {
+    font-size: 0.62rem;
+  }
+
+  .monograma {
+    font-size: 1.65rem;
+  }
+
+  .hero-contenido {
+    width: calc(100% - 32px);
+  }
+
+  .hero-contenido h1 {
+    font-size: 5.2rem;
+  }
+
+  .cuenta-regresiva {
+    gap: 5px;
+  }
+
+  .contador-numero {
+    font-size: 1.45rem;
+  }
+
+  .contador-label {
+    font-size: 0.5rem;
+  }
+
+  .alias-caja {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}
+
+/* ACCESIBILIDAD */
+
+@media (prefers-reduced-motion: reduce) {
+  .etapa-invitacion .invitacion *,
+  .etapa-invitacion .invitacion *::before,
+  .etapa-invitacion .invitacion *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+.hero-contenido h1 {
+  position: relative;
+  top: 18px;
+}
+
+
+/* ==============================
+   BANDA PLATEADA CON DESTELLOS
+================================ */
+
+.etapa-invitacion .banda-detalles {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+
+  background:
+    radial-gradient(ellipse at 15% 20%, rgba(255, 255, 255, 0.98), transparent 32%),
+    radial-gradient(ellipse at 85% 75%, rgba(255, 117, 216, 0.24), transparent 35%),
+    radial-gradient(ellipse at 50% 0%, rgba(255, 255, 255, 0.95), transparent 50%),
+    linear-gradient(135deg, #c5bfce, #f5edf5 30%, #d7d0df 55%, #f7eaf4 75%, #c5bdcf);
+}
+
+/* Textura de reflejos metálicos */
+.etapa-invitacion .banda-detalles::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  pointer-events: none;
+
+  background:
+    repeating-linear-gradient(
+      115deg,
+      transparent 0px,
+      transparent 65px,
+      rgba(255, 255, 255, 0.32) 67px,
+      transparent 70px,
+      transparent 130px
+    ),
+    linear-gradient(
+      115deg,
+      transparent 20%,
+      rgba(255, 255, 255, 0.4) 45%,
+      transparent 60%
+    );
+
+  opacity: 0.8;
+}
+
+/* Estrellas decorativas */
+.etapa-invitacion .banda-detalles::after {
+  content: "✦     ✧          ✦       ✧     ✦";
+  position: absolute;
+  z-index: -1;
+  inset: 14px 0 auto;
+  height: 100%;
+  padding: 0 10px;
+  overflow: hidden;
+  pointer-events: none;
+
+  color: rgba(139, 65, 127, 0.3);
+  font-size: 24px;
+  letter-spacing: 0.6em;
+  line-height: 3.5;
+  overflow-wrap: anywhere;
+
+  text-shadow:
+    0 0 8px rgba(255, 255, 255, 0.9),
+    0 0 15px rgba(255, 117, 216, 0.4);
+}
+
+/* Brillos en los bordes de cada bloque */
+.etapa-invitacion .banda-detalles article {
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.18);
+  box-shadow:
+    0 8px 28px rgba(92, 55, 95, 0.07),
+    inset 0 0 25px rgba(255, 255, 255, 0.28);
+}
+
+/* Iconos con un poco más de brillo */
+.etapa-invitacion .banda-detalles .detalle-icono {
+  color: #a42d83;
+  text-shadow: 0 0 12px rgba(245, 44, 169, 0.28);
+}
+
+/* ==============================
+   PISTA DE BAILE: DESTELLOS ROSAS
+================================ */
+
+.etapa-invitacion .regla-fiesta {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      ellipse at 15% 20%,
+      rgba(255, 211, 244, 0.38),
+      transparent 32%
+    ),
+    radial-gradient(
+      ellipse at 85% 80%,
+      rgba(255, 117, 216, 0.3),
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at 50% 50%,
+      #a52b79 0%,
+      #76194f 55%,
+      #491039 100%
+    );
+}
+
+/* Reflejos luminosos de discoteca */
+.etapa-invitacion .regla-fiesta::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      115deg,
+      transparent 15%,
+      rgba(255, 255, 255, 0.09) 28%,
+      transparent 40%
+    ),
+    linear-gradient(
+      65deg,
+      transparent 55%,
+      rgba(255, 173, 234, 0.12) 68%,
+      transparent 80%
+    ),
+    repeating-linear-gradient(
+      125deg,
+      transparent 0px,
+      transparent 85px,
+      rgba(255, 255, 255, 0.06) 87px,
+      transparent 90px,
+      transparent 150px
+    );
+}
+
+/* Estrellas y destellos decorativos */
+.etapa-invitacion .regla-fiesta::after {
+  content: "✦      ✧           ✦      ✧       ✦";
+  position: absolute;
+  z-index: -1;
+  inset: 8px 0 0;
+  padding: 0 8px;
+  pointer-events: none;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+
+  color: rgba(255, 230, 250, 0.65);
+  font-size: 23px;
+  letter-spacing: 0.65em;
+  line-height: 3.8;
+
+  text-shadow:
+    0 0 8px rgba(255, 255, 255, 0.8),
+    0 0 18px rgba(255, 117, 216, 0.9);
+}
+
+/* Brillo especial en los símbolos de la sección */
+.etapa-invitacion .regla-fiesta .destello-regla {
+  position: relative;
+  color: #ffe5f7;
+  text-shadow:
+    0 0 7px rgba(255, 255, 255, 0.9),
+    0 0 18px rgba(255, 117, 216, 0.9),
+    0 0 35px rgba(255, 45, 170, 0.6);
+}
+
+/* El título resalta por encima de los reflejos */
+.etapa-invitacion .regla-fiesta h2 {
+  position: relative;
+  text-shadow: 0 2px 18px rgba(255, 180, 235, 0.2);
+}
+
+.etapa-invitacion .regla-fiesta > p:not(.etiqueta-seccion) {
+  position: relative;
+  text-shadow: 0 1px 10px rgba(45, 0, 35, 0.2);
+}

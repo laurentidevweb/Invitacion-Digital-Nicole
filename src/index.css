@@ -1,0 +1,50 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Ballet&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;1,6..96,400&family=Montserrat:wght@400;500;600;700&display=swap');
+
+:root {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  color: #ffffff;
+  background: #080612;
+  
+--font-script: "Ballet", cursive;
+--font-display: "Bodoni Moda", serif;
+--font-sans: "Montserrat", sans-serif;
+
+--color-fondo: #170d20;
+--color-rosa: #ed78b7;
+--color-fucsia: #f52b9c;
+--color-plateado: #e8e4ed;
+--color-texto: #fff7fc;
+
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
