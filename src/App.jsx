@@ -1,4 +1,4 @@
-
+import { useRef } from "react";
 import { useState, useEffect } from "react";
 import "./App.css";
 import DiscoBall from "./components/DiscoBall.jsx";
@@ -12,21 +12,18 @@ const MAPS_LINK = "https://maps.app.goo.gl/DdS9htwVkJgXot7j7";
 const WHATSAPP = "5491122863854";
 
 const RSVP_LINK = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(
-  "Hola Nicole, confirmo mi asistencia a tus XV."
+  "Hola Nicole, confirmo mi asistencia a tus XV.",
 )}`;
 
 const CANCIONES_LINK = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(
-  "¡Hola Nicole! Te sugiero estas 3 canciones para tus XV:\n1. \n2. \n3. "
+  "¡Hola Nicole! Te sugiero estas 3 canciones para tus XV:\n1. \n2. \n3. ",
 )}`;
 
 function Countdown() {
   const [tiempo, setTiempo] = useState(calcularTiempo());
 
   function calcularTiempo() {
-    const diferencia = Math.max(
-      0,
-      FECHA_FIESTA.getTime() - Date.now()
-    );
+    const diferencia = Math.max(0, FECHA_FIESTA.getTime() - Date.now());
 
     return {
       dias: Math.floor(diferencia / 86400000),
@@ -68,6 +65,7 @@ function Countdown() {
 function App() {
   const [etapa, setEtapa] = useState("portada");
   const [copiado, setCopiado] = useState(false);
+  const audioRef = useRef(null);
 
   useEffect(() => {
     if (etapa === "animacion") {
@@ -99,11 +97,23 @@ function App() {
 
   function comenzarIntro() {
     if (etapa !== "portada") return;
+
+    if (audioRef.current) {
+      audioRef.current.volume = 1;
+      audioRef.current.play().catch((error) => {
+        console.error("No se pudo reproducir la música:", error);
+      });
+    }
+
     setEtapa("animacion");
   }
 
   return (
     <main className={`etapa-${etapa}`}>
+      <audio ref={audioRef} src="/musica.mp3" loop preload="auto" />
+
+      {/* El resto de tu invitación queda igual */}
+
       {(etapa === "portada" || etapa === "animacion") && (
         <section className={`pantalla pantalla-${etapa}`}>
           <button
@@ -116,9 +126,7 @@ function App() {
           </button>
 
           {etapa === "portada" && (
-            <p className="texto-inicio">
-              ¡Tocá la bola para comenzar!
-            </p>
+            <p className="texto-inicio">¡Tocá la bola para comenzar!</p>
           )}
 
           {etapa === "animacion" && (
@@ -172,8 +180,7 @@ function App() {
 
               <p className="hero-frase">
                 Una noche para disfrutar
-                <br />
-                y recuerdos para toda la vida.
+                <br />y recuerdos para toda la vida.
               </p>
 
               <p className="hero-fecha">21 · NOVIEMBRE · 2026</p>
@@ -191,18 +198,14 @@ function App() {
           <section className="seccion-fiesta countdown-section">
             <p className="etiqueta-seccion">CADA VEZ FALTA MENOS</p>
             <h2>La cuenta regresiva</h2>
-            <p className="texto-suave">
-              Se acerca una noche muy especial.
-            </p>
+            <p className="texto-suave">Se acerca una noche muy especial.</p>
             <Countdown />
           </section>
 
           <section className="seccion-fiesta evento-section" id="fiesta">
             <p className="etiqueta-seccion">GUARDÁ LA FECHA</p>
             <h2>Nos encontramos en la pista</h2>
-            <p className="texto-suave">
-              Quiero compartir esta noche con vos.
-            </p>
+            <p className="texto-suave">Quiero compartir esta noche con vos.</p>
 
             <div className="tarjetas-detalle">
               <article className="detalle-fiesta">
@@ -234,9 +237,7 @@ function App() {
               <span className="detalle-icono">✧</span>
               <p className="detalle-titulo">DRESS CODE</p>
               <h3>Elegante</h3>
-              <p>
-                ¡Rosa y plateado quedan reservados!
-              </p>
+              <p>¡Rosa y plateado quedan reservados!</p>
             </article>
 
             <article id="regalo">
@@ -257,8 +258,8 @@ function App() {
             <p className="etiqueta-seccion">VOS TAMBIÉN SOS PARTE</p>
             <h2>¿Qué escuchamos en la pista?</h2>
             <p className="texto-suave">
-              Ayudame a armar la playlist de la noche.
-              Elegí tres canciones que no pueden faltar.
+              Ayudame a armar la playlist de la noche. Elegí tres canciones que
+              no pueden faltar.
             </p>
 
             <a
@@ -276,8 +277,8 @@ function App() {
             <p className="etiqueta-seccion">UNA NOCHE, MIL RECUERDOS</p>
             <h2>¡A bailar hasta el final!</h2>
             <p>
-              Preparé todo para que disfrutes conmigo.
-              No te retires de la fiesta antes de que termine.
+              Preparé todo para que disfrutes conmigo. No te retires de la
+              fiesta antes de que termine.
             </p>
             <span className="destello-regla">✦ ✧ ✦</span>
           </section>
