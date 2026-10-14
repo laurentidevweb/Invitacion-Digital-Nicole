@@ -112,7 +112,7 @@ function App() {
             disabled={etapa !== "portada"}
             aria-label="Tocar la bola disco para comenzar"
           >
-            <DiscoBall />
+            <DiscoBall active={etapa === "animacion"} />
           </button>
 
           {etapa === "portada" && (
