@@ -1892,3 +1892,15 @@ main.etapa-invitacion {
     padding: 0 1.4rem;
   }
 }
+
+/* Bloquear el scroll durante la introducción */
+html:has(main.etapa-portada),
+html:has(main.etapa-animacion),
+html:has(main.etapa-titulo) {
+  overflow: hidden;
+}
+
+/* Permitir el scroll en la invitación */
+html:has(main.etapa-invitacion) {
+  overflow-y: auto;
+}
