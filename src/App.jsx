@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect, useLayoutEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 import "./App.css";
 import DiscoBall from "./components/DiscoBall.jsx";
 
@@ -77,7 +77,6 @@ function FotoEditorial({ numero, alt, lado = "derecha", children }) {
 
 function App() {
   const [etapa, setEtapa] = useState("portada");
-  const [tituloSaliendo, setTituloSaliendo] = useState(false);
   const [copiado, setCopiado] = useState(false);
   const audioRef = useRef(null);
 
@@ -91,48 +90,12 @@ function App() {
     }
 
     if (etapa === "titulo") {
-      const salida = setTimeout(() => {
-        setTituloSaliendo(true);
-      }, 5000);
-
-      const siguiente = setTimeout(() => {
+      const temporizador = setTimeout(() => {
         setEtapa("invitacion");
       }, 6000);
 
-      return () => {
-        clearTimeout(salida);
-        clearTimeout(siguiente);
-      };
+      return () => clearTimeout(temporizador);
     }
-  }, [etapa]);
-
-  // Las secciones de la invitación aparecen progresivamente al hacer scroll
-  useLayoutEffect(() => {
-    if (etapa !== "invitacion") return;
-
-    const items = document.querySelectorAll(
-      ".invitacion > :not(.nav-fiesta):not(.hero-fiesta)",
-    );
-
-    if (!("IntersectionObserver" in window)) return;
-
-    items.forEach((el) => el.classList.add("reveal"));
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.12 },
-    );
-
-    items.forEach((el) => observer.observe(el));
-
-    return () => observer.disconnect();
   }, [etapa]);
 
   async function copiarAlias() {
@@ -184,10 +147,7 @@ function App() {
       )}
 
       {etapa === "titulo" && (
-        <section
-          key="intro-nicole"
-          className={`pantalla-titulo${tituloSaliendo ? " saliendo" : ""}`}
-        >
+        <section key="intro-nicole" className="pantalla-titulo">
           <div className="estrellas" aria-hidden="true">
             <span className="estrella estrella-1">✦</span>
             <span className="estrella estrella-2">✧</span>
@@ -264,28 +224,21 @@ function App() {
             </p>
           </FotoEditorial>
 
-          <div
-            className="franja-fiesta"
-            aria-label="Una noche mágica, mis XV años, vení a disfrutar y preparate para brillar"
-          >
+          <div className="franja-fiesta" aria-hidden="true">
             <div className="franja-fiesta-pista">
-              <div className="franja-fiesta-grupo">
-                <span>✦ UNA NOCHE MÁGICA ✦</span>
-                <span>✧ MIS XV AÑOS ✧</span>
-                <span>♡ VENÍ A DISFRUTAR ♡</span>
-                <span>✦ UNA FIESTA INOLVIDABLE ✦</span>
-                <span>✧ PREPARATE PARA BRILLAR ✧</span>
-                <span>♡ ¡TE ESPERO EN LA PISTA! ♡</span>
-              </div>
+              <span>✦ UNA NOCHE MÁGICA ✦</span>
+              <span>💿 MIS XV AÑOS 💿</span>
+              <span>✦ VENÍ A DISFRUTAR ✦</span>
+              <span>♡ UNA FIESTA INOLVIDABLE ♡</span>
+              <span>✦ PREPARATE PARA BRILLAR ✦</span>
+              <span>🪩 ¡TE ESPERO EN LA PISTA! 🪩</span>
 
-              <div className="franja-fiesta-grupo" aria-hidden="true">
-                <span>✦ UNA NOCHE MÁGICA ✦</span>
-                <span>✧ MIS XV AÑOS ✧</span>
-                <span>♡ VENÍ A DISFRUTAR ♡</span>
-                <span>✦ UNA FIESTA INOLVIDABLE ✦</span>
-                <span>✧ PREPARATE PARA BRILLAR ✧</span>
-                <span>♡ ¡TE ESPERO EN LA PISTA! ♡</span>
-              </div>
+              <span>✦ UNA NOCHE MÁGICA ✦</span>
+              <span>💿 MIS XV AÑOS 💿</span>
+              <span>✦ VENÍ A DISFRUTAR ✦</span>
+              <span>♡ UNA FIESTA INOLVIDABLE ♡</span>
+              <span>✦ PREPARATE PARA BRILLAR ✦</span>
+              <span>🪩 ¡TE ESPERO EN LA PISTA! 🪩</span>
             </div>
           </div>
 
@@ -328,7 +281,7 @@ function App() {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  Ver ubicación en el mapa
+                  Ver ubicación en el mapa 
                 </a>
               </article>
             </div>

@@ -1766,18 +1766,12 @@ main.etapa-invitacion {
   font-weight: 600;
 }
 
-.etapa-invitacion .invitacion .foto-editorial-foto-5 {
-  height: auto;
-  aspect-ratio: auto;
-  overflow: visible;
+
+/* Ajuste del encuadre de la foto final de Nicole */
+.etapa-invitacion .foto-editorial-foto-5 img {
+  object-position: center 25%;
 }
 
-.etapa-invitacion .invitacion .foto-editorial-foto-5 img {
-  width: 100%;
-  height: auto;
-  object-fit: contain;
-  object-position: center;
-}
 
 /* =========================================
    RESPONSIVE PARA CELULARES Y TABLETS
@@ -1896,82 +1890,5 @@ main.etapa-invitacion {
 
   .etapa-invitacion .invitacion .franja-fiesta-grupo span {
     padding: 0 1.4rem;
-  }
-}
-
-/* ==============================
-   SALIDA DEL TÍTULO
-================================ */
-
-.pantalla-titulo.saliendo {
-  animation: salir-titulo 1s ease-in forwards;
-}
-
-@keyframes salir-titulo {
-  from {
-    opacity: 1;
-  }
-
-  to {
-    opacity: 0;
-  }
-}
-
-/* ==============================
-   APARICIÓN PROGRESIVA DE LA INVITACIÓN
-================================ */
-
-/* Fade general al entrar */
-.etapa-invitacion .invitacion {
-  animation: entrada-invitacion 1.8s ease-out both;
-}
-
-@keyframes entrada-invitacion {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-
-/* Hero: cada elemento aparece uno tras otro */
-.etapa-invitacion .hero-contenido > * {
-  animation: aparecer-texto 1.2s ease-out backwards;
-}
-
-.etapa-invitacion .hero-contenido > *:nth-child(1) { animation-delay: 0.6s; }
-.etapa-invitacion .hero-contenido > *:nth-child(2) { animation-delay: 0.9s; }
-.etapa-invitacion .hero-contenido > *:nth-child(3) { animation-delay: 1.2s; }
-.etapa-invitacion .hero-contenido > *:nth-child(4) { animation-delay: 1.4s; }
-.etapa-invitacion .hero-contenido > *:nth-child(5) { animation-delay: 1.6s; }
-.etapa-invitacion .hero-contenido > *:nth-child(6) { animation-delay: 1.8s; }
-.etapa-invitacion .hero-contenido > *:nth-child(7) { animation-delay: 2s; }
-
-/* Resto de secciones: aparecen al hacer scroll */
-.etapa-invitacion .invitacion .reveal {
-  opacity: 0;
-  transform: translateY(28px);
-  transition:
-    opacity 1s ease,
-    transform 1s ease;
-}
-
-.etapa-invitacion .invitacion .reveal.visible {
-  opacity: 1;
-  transform: none;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .etapa-invitacion .invitacion,
-  .etapa-invitacion .hero-contenido > * {
-    animation: none;
-  }
-
-  .etapa-invitacion .invitacion .reveal {
-    opacity: 1;
-    transform: none;
-    transition: none;
   }
 }
