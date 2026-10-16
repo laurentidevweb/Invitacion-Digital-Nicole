@@ -1,14 +1,10 @@
-import { useRef } from "react";
-import { useState, useEffect } from "react";
+import { useRef, useState, useEffect, useLayoutEffect } from "react";
 import "./App.css";
 import DiscoBall from "./components/DiscoBall.jsx";
 
 const FECHA_FIESTA = new Date("2026-11-21T20:30:00-03:00");
-
 const ALIAS = "nicck.nnn";
-
 const MAPS_LINK = "https://maps.app.goo.gl/DdS9htwVkJgXot7j7";
-
 const WHATSAPP = "5491122863854";
 
 const RSVP_LINK = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(
@@ -62,8 +58,26 @@ function Countdown() {
   );
 }
 
+function FotoEditorial({ numero, alt, lado = "derecha", children }) {
+  return (
+    <section className={`foto-editorial foto-editorial-${lado}`}>
+      <div className="foto-editorial-contenido">{children}</div>
+
+      <figure className={`foto-editorial-marco foto-editorial-foto-${numero}`}>
+        <img
+          src={`/fotos/fotoNicole${numero}.jpg`}
+          alt={alt}
+          loading="lazy"
+          decoding="async"
+        />
+      </figure>
+    </section>
+  );
+}
+
 function App() {
   const [etapa, setEtapa] = useState("portada");
+  const [tituloSaliendo, setTituloSaliendo] = useState(false);
   const [copiado, setCopiado] = useState(false);
   const audioRef = useRef(null);
 
@@ -77,12 +91,48 @@ function App() {
     }
 
     if (etapa === "titulo") {
-      const temporizador = setTimeout(() => {
+      const salida = setTimeout(() => {
+        setTituloSaliendo(true);
+      }, 5000);
+
+      const siguiente = setTimeout(() => {
         setEtapa("invitacion");
       }, 6000);
 
-      return () => clearTimeout(temporizador);
+      return () => {
+        clearTimeout(salida);
+        clearTimeout(siguiente);
+      };
     }
+  }, [etapa]);
+
+  // Las secciones de la invitación aparecen progresivamente al hacer scroll
+  useLayoutEffect(() => {
+    if (etapa !== "invitacion") return;
+
+    const items = document.querySelectorAll(
+      ".invitacion > :not(.nav-fiesta):not(.hero-fiesta)",
+    );
+
+    if (!("IntersectionObserver" in window)) return;
+
+    items.forEach((el) => el.classList.add("reveal"));
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12 },
+    );
+
+    items.forEach((el) => observer.observe(el));
+
+    return () => observer.disconnect();
   }, [etapa]);
 
   async function copiarAlias() {
@@ -112,8 +162,6 @@ function App() {
     <main className={`etapa-${etapa}`}>
       <audio ref={audioRef} src="/musica.mp3" loop preload="auto" />
 
-      {/* El resto de tu invitación queda igual */}
-
       {(etapa === "portada" || etapa === "animacion") && (
         <section className={`pantalla pantalla-${etapa}`}>
           <button
@@ -136,7 +184,10 @@ function App() {
       )}
 
       {etapa === "titulo" && (
-        <section key="intro-nicole" className="pantalla-titulo">
+        <section
+          key="intro-nicole"
+          className={`pantalla-titulo${tituloSaliendo ? " saliendo" : ""}`}
+        >
           <div className="estrellas" aria-hidden="true">
             <span className="estrella estrella-1">✦</span>
             <span className="estrella estrella-2">✧</span>
@@ -157,11 +208,11 @@ function App() {
       {etapa === "invitacion" && (
         <div className="invitacion">
           <header className="nav-fiesta">
-            <a className="monograma" href="#inicio">
+            <a className="monograma" href="#inicio" aria-label="Inicio">
               <span>✦</span>
             </a>
 
-            <nav>
+            <nav aria-label="Navegación principal">
               <a href="#fiesta">La fiesta</a>
               <a href="#detalles">Detalles</a>
               <a href="#regalo">Regalo</a>
@@ -185,14 +236,57 @@ function App() {
 
               <p className="hero-fecha">21 · NOVIEMBRE · 2026</p>
 
-              <a className="boton-fiesta" href="#fiesta">
+              <a className="boton-fiesta" href="#bienvenida">
                 DESCUBRÍ LA INVITACIÓN <span>↓</span>
               </a>
             </div>
           </section>
 
-          <div className="franja-fiesta" aria-hidden="true">
-            ✦ UNA NOCHE PARA BRILLAR ✦ UNA NOCHE PARA BRILLAR ✦
+          <FotoEditorial
+            numero={1}
+            alt="Nicole en una noche de paseo, con campera negra y falda animal print"
+            lado="derecha"
+          >
+            <p className="etiqueta-seccion">UN MOMENTO ESPECIAL</p>
+            <h2>Una noche mágica para celebrar</h2>
+            <p>
+              Hay momentos que se vuelven inolvidables por las personas que los
+              comparten.
+            </p>
+            <p>
+              Llegó el momento de celebrar una etapa muy especial de mi vida, y
+              quiero vivirla rodeada de las personas que forman parte de mi
+              historia.
+            </p>
+            <p>
+              Tu presencia es muy importante para mí. ¡Me encantaría que seas
+              parte de este recuerdo único!
+            </p>
+          </FotoEditorial>
+
+          <div
+            className="franja-fiesta"
+            aria-label="Una noche mágica, mis XV años, vení a disfrutar y preparate para brillar"
+          >
+            <div className="franja-fiesta-pista">
+              <div className="franja-fiesta-grupo">
+                <span>✦ UNA NOCHE MÁGICA ✦</span>
+                <span>✧ MIS XV AÑOS ✧</span>
+                <span>♡ VENÍ A DISFRUTAR ♡</span>
+                <span>✦ UNA FIESTA INOLVIDABLE ✦</span>
+                <span>✧ PREPARATE PARA BRILLAR ✧</span>
+                <span>♡ ¡TE ESPERO EN LA PISTA! ♡</span>
+              </div>
+
+              <div className="franja-fiesta-grupo" aria-hidden="true">
+                <span>✦ UNA NOCHE MÁGICA ✦</span>
+                <span>✧ MIS XV AÑOS ✧</span>
+                <span>♡ VENÍ A DISFRUTAR ♡</span>
+                <span>✦ UNA FIESTA INOLVIDABLE ✦</span>
+                <span>✧ PREPARATE PARA BRILLAR ✧</span>
+                <span>♡ ¡TE ESPERO EN LA PISTA! ♡</span>
+              </div>
+            </div>
           </div>
 
           <section className="seccion-fiesta countdown-section">
@@ -204,55 +298,106 @@ function App() {
 
           <section className="seccion-fiesta evento-section" id="fiesta">
             <p className="etiqueta-seccion">GUARDÁ LA FECHA</p>
-            <h2>Nos encontramos en la pista</h2>
+            <h2>La noche que tanto esperé</h2>
             <p className="texto-suave">Quiero compartir esta noche con vos.</p>
 
             <div className="tarjetas-detalle">
               <article className="detalle-fiesta">
                 <span className="detalle-icono">✧</span>
                 <p className="detalle-titulo">CUÁNDO</p>
-                <h3>Sábado 21 de noviembre</h3>
-                <p>Horario: 20:30 a 05:00 hs</p>
+                <h3>Sábado 21 de noviembre de 2026</h3>
+                <p>De 20:30 a 05:00 hs.</p>
+                <div className="aviso-entrada">
+                  <span>✦</span>
+                  <p>
+                    ¡No llegues tarde! Mi entrada será a las 21:15 hs. Quiero
+                    compartir ese momento con todos ustedes, así que te espero
+                    con tiempo para que no te lo pierdas.
+                  </p>
+                </div>
               </article>
 
               <article className="detalle-fiesta">
                 <span className="detalle-icono">⌖</span>
                 <p className="detalle-titulo">DÓNDE</p>
-                <h3>La celebración</h3>
-                <p>Prepará todo para disfrutar de una gran noche.</p>
+                <h3>La Quinta de los Tres Hermanos</h3>
+                <p>Balbastro 1448, Parque San Martín, Merlo.</p>
                 <a
                   className="enlace-fiesta"
                   href={MAPS_LINK}
                   target="_blank"
                   rel="noreferrer"
                 >
-                  Ver ubicación ↗
+                  Ver ubicación en el mapa
                 </a>
               </article>
             </div>
           </section>
 
+          <FotoEditorial
+            numero={2}
+            alt="Nicole junto a una baranda frente al agua, iluminada por luces rosas y violetas"
+            lado="izquierda"
+          >
+            <p className="etiqueta-seccion">UNA NOCHE PARA BRILLAR</p>
+            <h2>Nos encontramos en la pista</h2>
+            <p>
+              Una noche llena de música, luces y momentos para compartir.
+              ¡Quiero que seas parte!
+            </p>
+          </FotoEditorial>
+
+          <FotoEditorial
+            numero={3}
+            alt="Nicole de cuerpo entero junto a un vidrio oscuro con su reflejo"
+            lado="derecha"
+          >
+            <p className="etiqueta-seccion">RECUERDOS QUE QUEDAN</p>
+            <h2>Una noche para disfrutar</h2>
+            <p>
+              Quiero guardar en mi corazón cada abrazo, cada sonrisa y cada
+              instante compartido con ustedes.
+            </p>
+          </FotoEditorial>
+
           <section className="banda-detalles" id="detalles">
-            <article>
+            <article className="dress-code-card">
               <span className="detalle-icono">✧</span>
               <p className="detalle-titulo">DRESS CODE</p>
               <h3>Elegante</h3>
               <p>¡Rosa y plateado quedan reservados!</p>
             </article>
 
-            <article id="regalo">
+            <article id="regalo" className="regalo-card">
               <span className="detalle-icono">♡</span>
               <p className="detalle-titulo">UN REGALITO</p>
-              <h3>Tu presencia es lo más importante</h3>
+              <h3>Tu presencia es lo más importante.</h3>
               <p>Si deseás hacerme un regalo, te dejo mi alias:</p>
+
               <div className="alias-caja">
                 <span>{ALIAS}</span>
                 <button onClick={copiarAlias}>
                   {copiado ? "¡Copiado!" : "Copiar alias"}
                 </button>
               </div>
+
+              <p className="regalo-sobre">🎁 Regalo en sobre</p>
+              <p>También habrá sobres disponibles en el salón.</p>
             </article>
           </section>
+
+          <FotoEditorial
+            numero={4}
+            alt="Nicole con vestido blanco, campera negra y botas plateadas frente al agua y un puente iluminado"
+            lado="derecha"
+          >
+            <p className="etiqueta-seccion">MI NOCHE ESPECIAL</p>
+            <h2>Brillar a mi manera</h2>
+            <p>
+              Cada detalle forma parte de una noche que espero compartir con las
+              personas que más quiero.
+            </p>
+          </FotoEditorial>
 
           <section className="seccion-fiesta canciones-section">
             <p className="etiqueta-seccion">VOS TAMBIÉN SOS PARTE</p>
@@ -283,11 +428,16 @@ function App() {
             <span className="destello-regla">✦ ✧ ✦</span>
           </section>
 
-          <section className="seccion-fiesta confirmar-section">
-            <p className="etiqueta-seccion">QUIERO CONTAR CON VOS</p>
+          <FotoEditorial
+            numero={5}
+            alt="Nicole sentada de costado en un banco verde en una calle iluminada de noche"
+            lado="izquierda"
+          >
+            <p className="etiqueta-seccion">YA QUIERO QUE LLEGUE</p>
             <h2>¿Me acompañás?</h2>
-            <p className="texto-suave">
-              Confirmá tu asistencia y preparate para una noche inolvidable.
+            <p>
+              Confirmá tu asistencia y preparate para una noche inolvidable. ¡Me
+              va a encantar compartirla con vos!
             </p>
 
             <a
@@ -298,7 +448,7 @@ function App() {
             >
               CONFIRMAR ASISTENCIA ♡
             </a>
-          </section>
+          </FotoEditorial>
 
           <footer className="footer-fiesta">
             <p className="footer-nombre">Nicole</p>

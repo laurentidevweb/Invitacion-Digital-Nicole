@@ -1003,15 +1003,57 @@ main.etapa-invitacion {
   font-size: 0.92rem !important;
 }
 
-.enlace-fiesta {
-  display: inline-block;
-  margin-top: 14px;
-  color: var(--rosa) !important;
-  font-size: 0.82rem;
+
+/* Botón para ver la ubicación */
+.etapa-invitacion .enlace-fiesta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  margin-top: 1.2rem;
+  padding: 0.85rem 1.25rem;
+
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 999px;
+
+  background: linear-gradient(135deg, #bd2a88, #8f1d67);
+  color: #fff;
+
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.025em;
+  text-align: center;
   text-decoration: none;
-  border-bottom: 1px solid rgba(255, 117, 216, 0.45);
-  padding-bottom: 4px;
+
+  box-shadow: 0 5px 18px rgba(189, 42, 136, 0.22);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease;
 }
+
+.etapa-invitacion .enlace-fiesta::before {
+  content: "⌖";
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.etapa-invitacion .enlace-fiesta:hover {
+  background: linear-gradient(135deg, #d83da2, #a92778);
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(189, 42, 136, 0.35);
+}
+
+.etapa-invitacion .enlace-fiesta:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 4px;
+}
+
+.etapa-invitacion .enlace-fiesta:active {
+  transform: translateY(0);
+}
+
 
 /* BANDA DE DRESS CODE Y REGALO */
 
@@ -1560,5 +1602,376 @@ main.etapa-invitacion {
 @media (max-width: 380px) {
   .etapa-invitacion .nav-fiesta > .monograma {
     font-size: 1.65rem;
+  }
+}
+
+/* =========================================
+   FOTOS EDITORIALES DE NICOLE
+   Diseño adaptable: negro, plata y rosa
+========================================= */
+
+.etapa-invitacion .invitacion .foto-editorial {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  align-items: center;
+  gap: clamp(2rem, 6vw, 5.5rem);
+
+  width: min(1120px, calc(100% - 64px));
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: clamp(4rem, 8vw, 7rem) 0;
+
+  text-align: left;
+  background: transparent;
+}
+
+/* Alternancia: foto a la izquierda */
+
+.etapa-invitacion .invitacion .foto-editorial-izquierda {
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+}
+
+.etapa-invitacion .invitacion .foto-editorial-izquierda
+.foto-editorial-contenido {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.etapa-invitacion .invitacion .foto-editorial-izquierda
+.foto-editorial-marco {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+/* Alternancia: foto a la derecha */
+
+.etapa-invitacion .invitacion .foto-editorial-derecha
+.foto-editorial-contenido {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.etapa-invitacion .invitacion .foto-editorial-derecha
+.foto-editorial-marco {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+/* Texto */
+
+.etapa-invitacion .invitacion .foto-editorial-contenido {
+  min-width: 0;
+}
+
+.etapa-invitacion .invitacion .foto-editorial-contenido
+.etiqueta-seccion {
+  justify-content: flex-start;
+  margin-bottom: 1.1rem;
+  color: var(--rosa);
+  font-size: 0.68rem !important;
+  letter-spacing: 0.2em;
+}
+
+.etapa-invitacion .invitacion .foto-editorial-contenido h2 {
+  margin: 0 0 1.4rem;
+  color: #fbf3fa;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  line-height: 1.2;
+  text-wrap: balance;
+}
+
+.etapa-invitacion .invitacion .foto-editorial-contenido p:not(.etiqueta-seccion) {
+  margin: 0 0 1rem;
+  color: #c9bdcf;
+  font-size: 0.98rem !important;
+  line-height: 1.9;
+}
+
+/* Marco fotográfico */
+
+.etapa-invitacion .invitacion .foto-editorial-marco {
+  position: relative;
+  min-width: 0;
+  margin: 0;
+  padding: 0.45rem;
+  border: 1px solid rgba(216, 213, 224, 0.55);
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.16),
+    rgba(255, 117, 216, 0.07),
+    rgba(255, 255, 255, 0.025)
+  );
+  box-shadow:
+    0 18px 55px rgba(0, 0, 0, 0.3),
+    0 0 28px rgba(255, 117, 216, 0.055);
+}
+
+.etapa-invitacion .invitacion .foto-editorial-marco::after {
+  content: "";
+  position: absolute;
+  inset: 0.45rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  pointer-events: none;
+}
+
+.etapa-invitacion .invitacion .foto-editorial-marco img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  object-fit: contain;
+  background: #100b17;
+}
+
+/* Un poco más de protagonismo para la foto horizontal 4 */
+
+.etapa-invitacion .invitacion .foto-editorial-foto-4 {
+  padding: 0.5rem;
+  border-color: rgba(230, 222, 240, 0.8);
+  box-shadow:
+    0 22px 65px rgba(0, 0, 0, 0.38),
+    0 0 34px rgba(255, 255, 255, 0.07);
+}
+
+/* Texto de entrada a la fiesta */
+
+.etapa-invitacion .invitacion .aviso-entrada {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  margin-top: 1.3rem;
+  padding: 1rem;
+  border-left: 2px solid var(--rosa);
+  background: rgba(255, 117, 216, 0.055);
+  text-align: left;
+}
+
+.etapa-invitacion .invitacion .aviso-entrada > span {
+  flex-shrink: 0;
+  color: var(--rosa-intenso);
+}
+
+.etapa-invitacion .invitacion .aviso-entrada p {
+  margin: 0;
+  color: #d4c7d7;
+  font-size: 0.88rem !important;
+  line-height: 1.75;
+}
+
+/* Regalo en sobre */
+
+.etapa-invitacion .invitacion .regalo-sobre {
+  margin-top: 1.7rem !important;
+  color: #633650 !important;
+  font-weight: 600;
+}
+
+.etapa-invitacion .invitacion .foto-editorial-foto-5 {
+  height: auto;
+  aspect-ratio: auto;
+  overflow: visible;
+}
+
+.etapa-invitacion .invitacion .foto-editorial-foto-5 img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  object-position: center;
+}
+
+/* =========================================
+   RESPONSIVE PARA CELULARES Y TABLETS
+========================================= */
+
+@media (max-width: 700px) {
+  .etapa-invitacion .invitacion .foto-editorial,
+  .etapa-invitacion .invitacion .foto-editorial-izquierda {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.8rem;
+
+    width: calc(100% - 40px);
+    padding: 3.8rem 0;
+  }
+
+  /* En móvil, primero el texto y después la foto */
+  .etapa-invitacion .invitacion .foto-editorial-contenido,
+  .etapa-invitacion .invitacion .foto-editorial-izquierda
+  .foto-editorial-contenido,
+  .etapa-invitacion .invitacion .foto-editorial-derecha
+  .foto-editorial-contenido {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .etapa-invitacion .invitacion .foto-editorial-marco,
+  .etapa-invitacion .invitacion .foto-editorial-izquierda
+  .foto-editorial-marco,
+  .etapa-invitacion .invitacion .foto-editorial-derecha
+  .foto-editorial-marco {
+    grid-column: 1;
+    grid-row: 2;
+    width: 100%;
+    max-width: 440px;
+    margin: 0 auto;
+  }
+
+  .etapa-invitacion .invitacion .foto-editorial-contenido h2 {
+    font-size: clamp(2rem, 8vw, 2.65rem);
+  }
+
+  .etapa-invitacion .invitacion .foto-editorial-contenido p:not(.etiqueta-seccion) {
+    font-size: 0.94rem !important;
+  }
+}
+
+@media (max-width: 380px) {
+  .etapa-invitacion .invitacion .foto-editorial,
+  .etapa-invitacion .invitacion .foto-editorial-izquierda {
+    width: calc(100% - 32px);
+    padding: 3rem 0;
+    gap: 1.4rem;
+  }
+
+  .etapa-invitacion .invitacion .foto-editorial-marco {
+    padding: 0.3rem;
+  }
+}
+
+
+/* =========================================
+   MARQUESINA INFINITA DE LOS XV
+========================================= */
+
+.etapa-invitacion .invitacion .franja-fiesta {
+  display: block;
+  width: 100%;
+  padding: 17px 0;
+  overflow: hidden;
+  white-space: nowrap;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  background: linear-gradient(90deg, #6b174f, #bd2a88, #6b174f);
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+}
+
+.etapa-invitacion .invitacion .franja-fiesta-pista {
+  display: flex;
+  width: max-content;
+  flex-wrap: nowrap;
+  animation: marquesina-fiesta 28s linear infinite;
+  will-change: transform;
+}
+
+.etapa-invitacion .invitacion .franja-fiesta-grupo {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  width: max-content;
+}
+
+.etapa-invitacion .invitacion .franja-fiesta-grupo span {
+  display: block;
+  flex: 0 0 auto;
+  padding: 0 2rem;
+}
+
+@keyframes marquesina-fiesta {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 700px) {
+  .etapa-invitacion .invitacion .franja-fiesta {
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+  }
+
+  .etapa-invitacion .invitacion .franja-fiesta-grupo span {
+    padding: 0 1.4rem;
+  }
+}
+
+/* ==============================
+   SALIDA DEL TÍTULO
+================================ */
+
+.pantalla-titulo.saliendo {
+  animation: salir-titulo 1s ease-in forwards;
+}
+
+@keyframes salir-titulo {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+/* ==============================
+   APARICIÓN PROGRESIVA DE LA INVITACIÓN
+================================ */
+
+/* Fade general al entrar */
+.etapa-invitacion .invitacion {
+  animation: entrada-invitacion 1.8s ease-out both;
+}
+
+@keyframes entrada-invitacion {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* Hero: cada elemento aparece uno tras otro */
+.etapa-invitacion .hero-contenido > * {
+  animation: aparecer-texto 1.2s ease-out backwards;
+}
+
+.etapa-invitacion .hero-contenido > *:nth-child(1) { animation-delay: 0.6s; }
+.etapa-invitacion .hero-contenido > *:nth-child(2) { animation-delay: 0.9s; }
+.etapa-invitacion .hero-contenido > *:nth-child(3) { animation-delay: 1.2s; }
+.etapa-invitacion .hero-contenido > *:nth-child(4) { animation-delay: 1.4s; }
+.etapa-invitacion .hero-contenido > *:nth-child(5) { animation-delay: 1.6s; }
+.etapa-invitacion .hero-contenido > *:nth-child(6) { animation-delay: 1.8s; }
+.etapa-invitacion .hero-contenido > *:nth-child(7) { animation-delay: 2s; }
+
+/* Resto de secciones: aparecen al hacer scroll */
+.etapa-invitacion .invitacion .reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 1s ease,
+    transform 1s ease;
+}
+
+.etapa-invitacion .invitacion .reveal.visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .etapa-invitacion .invitacion,
+  .etapa-invitacion .hero-contenido > * {
+    animation: none;
+  }
+
+  .etapa-invitacion .invitacion .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
   }
 }
