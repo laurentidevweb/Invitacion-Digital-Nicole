@@ -65,7 +65,7 @@ function FotoEditorial({ numero, alt, lado = "derecha", children }) {
 
       <figure className={`foto-editorial-marco foto-editorial-foto-${numero}`}>
         <img
-          src={`/fotos/fotoNicole${numero}.${numero === 1 ? "png" : "jpg"}`}
+          src={`/fotos/fotoNicole${numero}.jpg`}
           alt={alt}
           loading="lazy"
           decoding="async"
